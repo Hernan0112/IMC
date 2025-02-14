@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cálculo de IMC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f9;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 400px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    .result {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f9f9f9;
+      border-radius: 5px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Calculadora de IMC</h1>
+    <form id="imcForm">
+      <label for="peso">Peso (Kg):</label>
+      <input type="number" id="peso" name="peso" step="0.1" required>
+      
+      <label for="altura">Altura (Mts):</label>
+      <input type="number" id="altura" name="altura" step="0.01" required>
+      
+      <button type="button" onclick="calcularIMC()">Calcular IMC</button>
+    </form>
+    <div id="resultado" class="result"></div>
+  </div>
+
+  <script>
+    function calcularIMC() {
+      const peso = parseFloat(document.getElementById("peso").value);
+      const altura = parseFloat(document.getElementById("altura").value);
+
+      if (isNaN(peso) || isNaN(altura) || peso <= 0 || altura <= 0) {
+        document.getElementById("resultado").innerText = "Por favor, ingrese valores válidos.";
+        return;
+      }
+
+      const imc = peso / (altura ** 2);
+      let mensaje = "";
+
+      if (imc < 18.5) {
+        mensaje = "¡¡Alerta!!. Tú Peso es insuficiente.";
+      } else if (imc >= 18.5 && imc <= 24.9) {
+        mensaje = "Tu Peso está de forma Normal.";
+      } else if (imc >= 25 && imc <= 29.9) {
+        mensaje = "¡¡Alerta!!. Tienes Sobrepeso.";
+      } else {
+        mensaje = "¡¡Alerta!!. Tienes Obesidad.";
+      }
+
+      document.getElementById("resultado").innerHTML = `
+        <p>El índice de masa corporal (IMC) es: <strong>${imc.toFixed(2)}</strong></p>
+        <p>${mensaje}</p>
+      `;
+    }
+  </script>
+</body>
+</html>
